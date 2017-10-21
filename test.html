@@ -1,0 +1,37 @@
+<html>
+<head>
+    <script src="sim.js"></script>
+</head>
+<body>
+<script>
+
+function test(){
+    sim = new simulateur();
+    units = sim.getUnit();
+    //ajout flotte attauante
+    var tfa = sim.getEmptyFA();
+    tfa[units.CR] = 3;
+    sim.addFA(tfa);
+    sim.addFA(tfa);
+    var tfd = sim.getEmptyFD();
+    tfd[units.CL] = 5;
+    sim.addFD(tfd);
+
+    sim.simulate();
+
+
+
+    console.log(sim.getFA());
+    console.log(sim.getFD());
+
+}
+
+</script>
+<button type="submit" onclick="test()" >test</button>
+
+
+
+
+
+
+</body>
