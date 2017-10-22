@@ -151,7 +151,7 @@ function simulateur() {
                 if (FA[idFlotte][i] != 0)
                 {
                     //debug
-                    console.log("function generateFATAb()  flotte Attaque " + idFlotte + " vaisseau " + i + " nb " + FA[idFlotte][i]);
+                    //console.log("function generateFATAb()  flotte Attaque " + idFlotte + " vaisseau " + i + " nb " + FA[idFlotte][i]);
 
                    // FAFeaturePondere[idFlotte][i]=[[unitFeature.Degat], unitsFeature[i][unitFeature.Bouclier],unitsFeature[i][unitFeature.Coque] ]
 
@@ -160,7 +160,7 @@ function simulateur() {
                     for ( count = 0; count < FA[idFlotte][i]; count++) {
                        FATab.push([idFlotte, i , unitsFeature[i][unitFeature.Degat], unitsFeature[i][unitFeature.Bouclier],unitsFeature[i][unitFeature.Coque],unitsFeature[i][unitFeature.Coque] ]) // todo virer les enums
                      }
-                    console.log("ajout vaisseaux " + count + "  flotte Attaque " + FA[idFlotte][i]);
+                    //console.log("ajout vaisseaux " + count + "  flotte Attaque " + FA[idFlotte][i]);
 
                 }
             }
@@ -179,12 +179,13 @@ function simulateur() {
                 if (FD[idFlotte][i] != 0) {
                     //debug
 
-                    console.log("function generateFDTAb()  flotte Defense " + idFlotte + " vaisseau " + i + " nb " + FA[idFlotte][i]);
+                    //console.log("function generateFDTAb()  flotte Defense " + idFlotte + " vaisseau " + i + " nb " + FA[idFlotte][i]);
                     var count = 0;
                     for (count = 0; count < FD[idFlotte][i]; count++) {
                         FDTab.push([idFlotte, i, unitsFeature[i][unitFeature.Degat], unitsFeature[i][unitFeature.Bouclier], unitsFeature[i][unitFeature.Coque], unitsFeature[i][unitFeature.Coque]]) // todo virer les enums
                         //            0       1                     2                                3                                  4                                  5
                     }
+                    //console.log("ajout vaisseaux " + count + "  flotte Attaque " + FD[idFlotte][i]);
                 }
             }
         }
@@ -194,22 +195,21 @@ function simulateur() {
     {
         // flotte attaquante
         for (var i = 0; i < FATab.length ; i++) {
-            if (FATab[i][4] <= 0)
+            if (FATab[i][4] == -1)
             {
                 // sniff
-                console.log("    avant FATab pullOutDestroy " + FATab.length);
+                ////console.log("    avant FATab pullOutDestroy " + FATab.length);
                 FATab.splice(i,1);
-                delete FATab[i];
-                console.log("    apres FATab pullOutDestroy " + FATab.length);
+                ////console.log("    apres FATab pullOutDestroy " + FATab.length);
             }
         }
         for (var i = 0; i < FDTab.length ; i++) {
-            if (FDTab[i][4] <= 0)
+            if (FDTab[i][4] == -1)
             {
                 // sniff
-                console.log("    avant FDTab pullOutDestroy " + FDTab.length);
+                ////console.log("    avant FDTab pullOutDestroy " + FDTab.length);
                 FDTab.splice(i,1);
-                console.log("    apres FDTab pullOutDestroy " + FDTab.length);
+                ////console.log("    apres FDTab pullOutDestroy " + FDTab.length);
 
             }
         }
@@ -223,53 +223,59 @@ function simulateur() {
     this.simulate = function () {
         generateFATAb();
         generateFDTAb();
+        //console.log("RF : " + RapidFire);
+        console.log(FATab.length);
+        console.log(FDTab.length);
+
+
 
         var NombreDeTours;
         for (NombreDeTours = 1; NombreDeTours <= 6; ++NombreDeTours) {
-            console.log(" Tour " + NombreDeTours);
+            //console.log(" Tour " + NombreDeTours);
             if (FATab.length == 0) // defenseur gaganant
             {
-                console.log("    fin du combat tour " + NombreDeTours);
+                //console.log("    fin du combat tour " + NombreDeTours);
                 break ;
             }
             if (FDTab.length == 0) // Attaquant gaganant
             {
-                console.log("    fin du combat tour " + NombreDeTours);
+                //console.log("    fin du combat tour " + NombreDeTours);
 
                 break ;
             }
-            console.log("    Flotte attaque  " + FATab.length);
-            console.log("    Flotte defense  " + FDTab.length );
+            //console.log("    Flotte attaque  " + FATab.length);
+            //console.log("    Flotte defense  " + FDTab.length );
 
 
 
-            console.log("Attaquant attaque");
+            //console.log("Attaquant attaque");
             var isRapidfire = true;
             for (var i = 0; i < FATab.length ; ++i) {
                 do { //permet rapidfire
-                    //console.log("vaisseau " + i + " " + getNameUnitBYid(FATab[i][1]));
+                    ////console.log("vaisseau " + i + " " + getNameUnitBYid(FATab[i][1]));
                     //recupéarion d'une cible
-                    var  idUniteDefense = Math.floor(Math.random()*FDTab.length) ;
+                    var  idUniteDefense = Math.floor(Math.random()*(FDTab.length - 1)) ;
+
                     //console.log(getNameUnitBYid(FATab[i][1]) + " VS " + getNameUnitBYid(FDTab[idUniteDefense][1]));
 
                     var degatAvenir = FATab[i][2];
 
                     if ( degatAvenir < FDTab[idUniteDefense][2] / 100 )
                     {
-                        console.log("    L'attaque n'est pas assez puissante pour avoir un effet." );
+                        //console.log("    L'attaque n'est pas assez puissante pour avoir un effet." );
                         degatAvenir = 0 ;
                     }
                     else
                     {
                         if ( degatAvenir < FDTab[idUniteDefense][3] )
                         {
-                            console.log(" Le bouclier de l'unité en défense a tout absorbé." );
+                            //console.log(" Le bouclier de l'unité en défense a tout absorbé." );
                             FDTab[idUniteDefense][3] -= degatAvenir ;
                             degatAvenir = 0 ;
                         }
                         else
                         {
-                            console.log("  Le bouclier de l'unité en défense a absorbé " + FDTab[idUniteDefense][3] + " points." );
+                            //console.log("  Le bouclier de l'unité en défense a absorbé " + FDTab[idUniteDefense][3] + " points." );
                             degatAvenir -= FDTab[idUniteDefense][3] ;
                             FDTab[idUniteDefense][3] = 0 ;
                         }
@@ -277,15 +283,15 @@ function simulateur() {
                     //  dégats dans la coque
                     if ( degatAvenir > 0 )
                     {
-                        console.log("L'unité en défense encaisse " + degatAvenir + " points." );
+                        //console.log("L'unité en défense encaisse " + degatAvenir + " points." );
                         if ( degatAvenir < FDTab[idUniteDefense][4] )
                         {
                             FDTab[idUniteDefense][4]-= degatAvenir ;
                         }
                         else
                         {
-                            console.log(" L'unité en défense a été détruite (reste 0 points de structure)." );
-                             FDTab[idUniteDefense][4] = 0 ;
+                            //console.log(" L'unité en défense a été détruite (reste 0 points de structure)." );
+                             FDTab[idUniteDefense][4] = -1 ;
                                                    }
                     }
                     // Calcul de la probabilité de destruction
@@ -294,39 +300,39 @@ function simulateur() {
                         //if ( (uint)r.Next((int)unitesDefenseur[idUniteDefense].coqueInitiale) > unitesDefenseur[idUniteDefense].coque )
                         if ( Math.floor(Math.random() * FDTab[idUniteDefense][5]) > FDTab[idUniteDefense][4] )
                         {
-                            console.log(" L'unité en défense a été détruite (reste " +  FDTab[idUniteDefense][4] + " points de structure)" );
+                            //console.log(" L'unité en défense a été détruite (reste " +  FDTab[idUniteDefense][4] + " points de structure)" );
                               //unitesDefenseur[idUniteDefense].detruit = true ;
-                            FDTab[idUniteDefense][4] = 0 ;
+                            FDTab[idUniteDefense][4] = -1 ;
                         }
                     else
                         {
-                            console.log(" L'unité en défense a été resisté (reste " +  FDTab[idUniteDefense][4] + " points de structure)" );
+                            //console.log(" L'unité en défense a été resisté (reste " +  FDTab[idUniteDefense][4] + " points de structure)" );
 
                          }
                     }
                     else
                     {
-                        console.log(" L'unité en défense a été resisté(2) (reste " +  FDTab[idUniteDefense][4] + " points de structure)" );
+                        //console.log(" L'unité en défense a été resisté(2) (reste " +  FDTab[idUniteDefense][4] + " points de structure)" );
                     }
 
 
 
                     // rapidfire
 
-                    console.log("RF : " + RapidFire[ FATab[idUniteDefense][1]][FDTab[idUniteDefense][1]]);
+                //    //console.log("RF : " + RapidFire[ FATab[idUniteDefense][1]][FDTab[idUniteDefense][1]]);
                     var rnd = Math.random()*100;
-                    console.log("rnd : " + rnd);
+                    //console.log("rnd : " + rnd);
 
-                  if ( rnd > RapidFire[ FATab[idUniteDefense][1]][FDTab[idUniteDefense][1]])
+                  if ( rnd > RapidFire[ FATab[i][1]][FDTab[idUniteDefense][1]])
                      {
-                    console.log("Pas de rapid fire)" );
+                    //console.log("Pas de rapid fire)" );
                      isRapidfire= false;
 
                     }
                     else
                   {
                       isRapidfire= true;
-                      console.log("Rapid fire)" );
+                      //console.log("Rapid fire)" );
                   }
 
 
@@ -336,9 +342,98 @@ function simulateur() {
             }//fin tour attaquant
 
 
+            //console.log("Le defenseur attaque");
+
+            isRapidfire = true;
+            for (var i = 0; i < FDTab.length ; ++i) {
+                do { //permet rapidfire
+                    ////console.log("vaisseau " + i + " " + getNameUnitBYid(FDTab[i][1]));
+                    //recupéarion d'une cible
+                    var  idUniteDefense = Math.floor(Math.random()*(FATab.length-1)) ;
+                    //console.log(getNameUnitBYid(FDTab[i][1]) + " VS " + getNameUnitBYid(FATab[idUniteDefense][1]));
+
+                    var degatAvenir = FDTab[i][2];
+
+                    if ( degatAvenir < FATab[idUniteDefense][2] / 100 )
+                    {
+                        //console.log("    L'attaque n'est pas assez puissante pour avoir un effet." );
+                        degatAvenir = 0 ;
+                    }
+                    else
+                    {
+                        if ( degatAvenir < FATab[idUniteDefense][3] )
+                        {
+                            //console.log(" Le bouclier de l'unité en défense a tout absorbé." );
+                            FATab[idUniteDefense][3] -= degatAvenir ;
+                            degatAvenir = 0 ;
+                        }
+                        else
+                        {
+                            //console.log("  Le bouclier de l'unité en défense a absorbé " + FATab[idUniteDefense][3] + " points." );
+                            degatAvenir -= FATab[idUniteDefense][3] ;
+                            FATab[idUniteDefense][3] = 0 ;
+                        }
+                    }
+                    //  dégats dans la coque
+                    if ( degatAvenir > 0 )
+                    {
+                        //console.log("L'unité en défense encaisse " + degatAvenir + " points." );
+                        if ( degatAvenir < FATab[idUniteDefense][4] )
+                        {
+                            FATab[idUniteDefense][4]-= degatAvenir ;
+                        }
+                        else
+                        {
+                            //console.log(" L'unité en défense a été détruite (reste 0 points de structure)." );
+                            FATab[idUniteDefense][4] = -1 ;
+                        }
+                    }
+                    // Calcul de la probabilité de destruction
+                    if (  FATab[idUniteDefense][4] * 10 < FATab[idUniteDefense][5] * 7 )
+                    {
+                        if ( Math.floor(Math.random() * FATab[idUniteDefense][5]) > FATab[idUniteDefense][4] )
+                        {
+                            //console.log(" L'unité en défense a été détruite (reste " +  FATab[idUniteDefense][4] + " points de structure)" );
+                            FATab[idUniteDefense][4] = -1 ;
+                        }
+                        else
+                        {
+                            //console.log(" L'unité en défense a été resisté (reste " +  FATab[idUniteDefense][4] + " points de structure)" );
+
+                        }
+                    }
+                    else
+                    {
+                        //console.log(" L'unité en défense a été resisté(2) (reste " +  FATab[idUniteDefense][4] + " points de structure)" );
+                    }
 
 
 
+                    // rapidfire
+
+                    //console.log("idUniteDefense : " + idUniteDefense);
+                    //console.log("FATab[idUniteDefense][1] : " + FATab[idUniteDefense][1]);
+
+                    var rnd = Math.random()*100;
+                    //console.log("rnd : " + rnd);
+
+                    if ( rnd > RapidFire[FDTab[i][1]][FATab[idUniteDefense][1]])
+                    {
+                        //console.log("Pas de rapid fire)" );
+                        isRapidfire= false;
+
+                    }
+                    else
+                    {
+                        isRapidfire= true;
+                        //console.log("Rapid fire)" );
+                    }
+
+
+                }
+                while (isRapidfire);
+
+            }//fin tour defense
 
             //suppression vaisseau detruit
             pullOutDestroy();
@@ -356,11 +451,17 @@ function simulateur() {
         }
         else
         {
+            console.log(FATab.length);
+            console.log(FATab);
+            console.log(FDTab.length);
             console.log(" pas de gagnant ");
         }
 
-
-
+        // 1 todo reconstituer flotte apres
+        //   todo comparatif avant apres ....
+        // 2 todo retourner resultat
+        //  todo refactoring (simplification)
+        // 3 todo test unitaire ....retour actuellement improbable :s
 
 
 

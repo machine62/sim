@@ -10,11 +10,13 @@ function test(){
     units = sim.getUnit();
     //ajout flotte attauante
     var tfa = sim.getEmptyFA();
-    tfa[units.CR] = 3;
+
+    tfa[units.CL] = 300;
     sim.addFA(tfa);
-    sim.addFA(tfa);
+    //sim.addFA(tfa);
     var tfd = sim.getEmptyFD();
-    tfd[units.CL] = 5;
+    tfd[units.CR] = 1000;
+    tfd[units.VB] = 5000;
     sim.addFD(tfd);
 
     sim.simulate();
