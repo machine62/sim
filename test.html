@@ -1,39 +1,419 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Test script Simulation</title>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="sim.js"></script>
 </head>
 <body>
+
+<h1>Test</h1>
+<div class="row  ">
+    <div class="row  col-lg-offset-4 col-lg-4 ">
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary" onclick="simpletest()">Test simple</button>
+        <button type="button" class="btn btn-primary" onclick="complextest()">Test complexe</button>
+        <button type="button" class="btn btn-warning" onclick="simpletestrf()">Test simple RF</button>
+        <button type="button" class="btn btn-warning" onclick="complextestrf()">Test complexe RF</button>
+    </div>
+</div>
+</div>
+<div class="container">
+    <div class="row  col-lg-12 ">
+    <table id="recap" class="table table-striped table-condensed">
+        <thead>
+        <tr>
+            <th>Temps</th>
+            <th>Test</th>
+            <th>numero</th>
+            <th>Resultat</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+</div>
+
+<h2>Test simple sans rf </h2>
+<div class="container">
+    <div class="row  col-lg-12 ">
+    <div id="simpletest">
+
+    </div>
+    </div>
+</div>
+<h2>Test complexe sans rf</h2>
+<div class="container">
+    <div class="row  col-lg-12 ">
+    <div id="complextest">
+    </div>
+    </div>
+</div>
+<h2>Test simple avec rf </h2>
+<div class="container">
+    <div class="row  col-lg-12 ">
+    <div id="simpletestrf">
+
+    </div>
+    </div>
+</div>
+<h2>Test complexe avec rf </h2>
+<div class="container">
+    <div class="row  col-lg-12 ">
+    <div id="complextestrf">
+
+    </div>
+    </div>
+</div>
+
 <script>
 
-function test(){
-    sim = new simulateur();
-    units = sim.getUnit();
-    //ajout flotte attauante
-    var tfa = sim.getEmptyFA();
-
-    tfa[units.CL] = 300;
-    sim.addFA(tfa);
-    //sim.addFA(tfa);
-    var tfd = sim.getEmptyFD();
-    tfd[units.CR] = 1000;
-    tfd[units.VB] = 5000;
-    sim.addFD(tfd);
-
-    sim.simulate();
 
 
 
-    console.log(sim.getFA());
-    console.log(sim.getFD());
+function simpletest() {
+        var sim = new simulateur();
+        var units = sim.getUnit();
+        var tabtest = [];
+        var numberTest = 0;
+
+        //test1
+        //30cl vs 30 cl
+    tabtest[numberTest] = [];
+    tabtest[numberTest]["FA"] =             [0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_meilleur"] =    [0, 0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_pire"] =        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FD"] =             [0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_meilleur"] =    [0, 0, 17 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_pire"] =        [0, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    //test2
+    //70cl vs 30 cl
+    numberTest++;
+    tabtest[numberTest] = [];
+    tabtest[numberTest]["FA"] =             [0, 0, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_meilleur"] =    [0, 0, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_pire"] =        [0, 0, 65, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FD"] =             [0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_meilleur"] =    [0, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_pire"] =        [0, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+    //test3
+    //300pt vs 100 pt
+    numberTest++;
+    tabtest[numberTest] = [];
+    tabtest[numberTest]["FA"] =             [300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_meilleur"] =    [300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_pire"] =        [300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FD"] =             [100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_meilleur"] =    [100, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_pire"] =        [99, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+    //test3
+    //3000cl vs 1000 cl
+    numberTest++;
+    tabtest[numberTest] = [];
+    tabtest[numberTest]["FA"] =             [0, 0, 3000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_meilleur"] =    [0, 0, 2990, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_pire"] =        [0, 0, 2961, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FD"] =             [0, 0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_meilleur"] =    [0, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_pire"] =        [0, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+
+    //test3
+    //3000cl vs 1000 cl
+    numberTest++;
+    tabtest[numberTest] = [];
+    tabtest[numberTest]["FA"] =             [0, 0, 1500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_meilleur"] =    [0, 0, 370, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_pire"] =        [0, 0, 283, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FD"] =             [10000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_meilleur"] =    [9908, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_pire"] =        [9843, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+
+
+
+
+    var max = tabtest.length
+    console.log(max) ;
+        for (var i = 0; i < max; i++) {
+            realiseTest("simpletest",tabtest[i],i);
+        }
+
+
+
+
+
+    }
+
+
+
+function complextest() {
+    var sim = new simulateur();
+    var units = sim.getUnit();
+    var tabtest = [];
+    var numberTest = 0;
+
+
+    //test4
+    //300pt vs 100 cl
+
+    tabtest[numberTest] = [];
+    tabtest[numberTest]["FA"] =             [1000, 500, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_meilleur"] =    [963, 500, 960, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FA_pire"] =        [914, 500, 912, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+    tabtest[numberTest]["FD"] =             [2000, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_meilleur"] =    [1452, 0, 381 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    tabtest[numberTest]["FD_pire"] =        [1342, 0, 320 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+
+
+
+
+    var max = tabtest.length
+    console.log(max) ;
+    for (var i = 0; i < max; i++) {
+        realiseTest("complextest",tabtest[i],i);
+    }
+
+
+
+
 
 }
 
+    function realiseTest(TagidTest, tabsimu , idtest) {
+        var testok = true;
+        var start = new Date();
+
+        var sim = new simulateur();
+        var units = sim.getUnit();
+        console.log(tabsimu["FA"]);
+
+
+        sim.addFA(tabsimu["FA"]);
+        sim.addFD(tabsimu["FD"]);
+        sim.simulate(); // simulation rpoprement dite
+
+        var ResultFA = sim.ResultFA();
+        var ResultFD = sim.ResultFD();
+
+
+        var end  = new Date();
+        var time = end.getTime() - start.getTime();
+
+
+        $('#'+TagidTest).append('<table id="'+ TagidTest + idtest + '" class="table table-striped table-condensed"></table>');
+        var table =  $('#'+ TagidTest + idtest);
+        table.append( '<thead><tr><th colspan="25">Test ' + TagidTest + ' ' + idtest +'</th></tr></thead>' );
+        // titre
+        var thead = "<td>_</td>";
+        for (var i = units.PT; i < (units.MIP + 1); i++) {
+            thead += '<td>' + Object.keys(units).find(k => units[k] === i); +'</td>' //todo faire fonction
+        }
+         table.append( '<thead><tr>' + thead     + '</tr></thead>' );
+        var tbody = "";
+        // flotta d'attque avant
+
+        tbody += "<tr>";
+        tbody += "<td>Fotte Att</td>";
+
+        for (var i = units.PT; i < (units.MIP + 1); i++) {
+            if (tabsimu["FA"][i] == undefined)
+            {
+                tbody += '<td> _ </td>'
+            }
+            else {
+                tbody += '<td> '+ tabsimu["FA"][i] + ' </td>'
+            }
+
+        }
+        tbody += "</tr>";
+
+        // flotta d'attque Apres pire
+        tbody += "<td>Fotte Att pire</td>";
+        for (var i = units.PT; i < (units.MIP + 1); i++) {
+            if (tabsimu["FA_pire"][i] == undefined)
+            {
+                tbody += '<td> _ </td>'
+            }
+            else {
+                tbody += '<td> '+ tabsimu["FA_pire"][i] + ' </td>'
+            }
+
+        }
+        tbody += "</tr>";
+
+
+
+
+        // flotta d'attque resulat
+        tbody += "<td>Fotte Att Resultat</td>";
+        for (var i = units.PT; i < (units.MIP + 1); i++) {
+            if (ResultFA[i] == undefined)
+            {
+                tbody += '<td> _ </td>'
+            }
+            else {
+                if (ResultFA[i] <= tabsimu["FA_meilleur"][i] && ResultFA[i] >= tabsimu["FA_pire"][i] )
+                {
+                    tbody += '<td class="success"> '+ ResultFA[i] + ' </td>'
+                }
+                else
+                {
+                    tbody += '<td class="danger"> '+ ResultFA[i] + ' </td>'
+                    testok = false;
+                }
+
+            }
+
+        }
+        tbody += "</tr>";
+
+
+
+        // flotta d'attque Apres maielleur
+        tbody += "<td>Fotte Att meilleur</td>";
+        for (var i = units.PT; i < (units.MIP + 1); i++) {
+            if (tabsimu["FA_meilleur"][i] == undefined)
+            {
+                tbody += '<td> _ </td>'
+            }
+            else {
+                tbody += '<td> '+ tabsimu["FA_meilleur"][i] + ' </td>'
+            }
+
+        }
+        tbody += "</tr>";
+
+
+
+
+        ///////////defense
+
+        tbody += "<tr>";
+        tbody += "<td>Fotte Def</td>";
+
+        for (var i = units.PT; i < (units.MIP + 1); i++) {
+            if (tabsimu["FD"][i] == undefined)
+            {
+                tbody += '<td> _ </td>'
+            }
+            else {
+                tbody += '<td> '+ tabsimu["FD"][i] + ' </td>'
+            }
+
+        }
+        tbody += "</tr>";
+
+        // flotta d'attque Apres pire
+        tbody += "<td>Fotte Def pire</td>";
+        for (var i = units.PT; i < (units.MIP + 1); i++) {
+            if (tabsimu["FD_pire"][i] == undefined)
+            {
+                tbody += '<td> _ </td>'
+            }
+            else {
+                tbody += '<td> '+ tabsimu["FD_pire"][i] + ' </td>'
+            }
+
+        }
+        tbody += "</tr>";
+
+
+
+
+        // flotta d'attque resulat
+        tbody += "<td>Fotte Def Resultat</td>";
+        for (var i = units.PT; i < (units.MIP + 1); i++) {
+            if (ResultFD[i] == undefined)
+            {
+                tbody += '<td> _ </td>'
+            }
+            else {
+                if (ResultFD[i] <= tabsimu["FD_meilleur"][i] && ResultFD[i] >= tabsimu["FD_pire"][i] )
+                {
+                    tbody += '<td class="success"> '+ ResultFD[i] + ' </td>'
+                }
+                else
+                {
+                    tbody += '<td class="danger"> '+ ResultFD[i] + ' </td>'
+                    testok = false;
+                }
+
+            }
+
+        }
+        tbody += "</tr>";
+
+
+
+        // flotta d'attque Apres maielleur
+        tbody += "<td>Fotte Def meilleur</td>";
+        for (var i = units.PT; i < (units.MIP + 1); i++) {
+            if (tabsimu["FD_meilleur"][i] == undefined)
+            {
+                tbody += '<td> _ </td>'
+            }
+            else {
+                tbody += '<td> '+ tabsimu["FD_meilleur"][i] + ' </td>'
+            }
+
+        }
+        tbody += "</tr>";
+
+
+
+
+
+        table.append( '<tbody><tr>' + tbody     + '</tr></tbody>' );
+        if (testok)
+        {
+            $("#recap > tbody").append("<tr class='success'><td>" + time +" ms </td><td>" + TagidTest + " </td><td>" + (idtest + 1 ) + " </td><td>ok</td></tr>");
+
+        }
+        else {
+            $("#recap > tbody").append("<tr class='danger'><td>" + time +" ms </td><td>" + TagidTest + " </td><td>" + (idtest + 1 ) + " </td><td >Failed</td></tr>");
+
+        }
+
+      }
+
+
+
+    function simpletestrf() {
+        alert("Non Implementé");
+    }
+
+    function complextestrf() {
+        alert("Non Implementé");
+    }
+
+
+
+
+    //test 1
+    sim = new simulateur();
+    units = sim.getUnit();
+
+
+
 </script>
-<button type="submit" onclick="test()" >test</button>
-
-
-
-
 
 
 </body>
