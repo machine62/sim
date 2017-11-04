@@ -249,20 +249,30 @@ function simulateur() {
     //-------------------------------------------------
     ///Purge tableaux de flotte
     function pullOutDestroy() {
+        var NewFATab = [];
+
         // flotte attaquante
         for (var i = 0; i < FATab.length; i++) {
-            if (FATab[i][3] <= 0) {
+            if (FATab[i][3] > 0) {
                 // sniff
-                FATab.splice(i, 1);
+                NewFATab.push(FATab[i]);
             }
+
         }
+        FATab = null;
+        FATab = NewFATab;
+
+
         //flotte defense
+        var NewFDTab = [];
         for (var i = 0; i < FDTab.length; i++) {
-            if (FDTab[i][3] <= 0) {
-                // sniff
-                FDTab.splice(i, 1);
+            if (FDTab[i][3] > 0) {
+                NewFDTab.push(FDTab[i]);
             }
         }
+        FDTab = null;
+        FDTab = NewFDTab;
+
     }
 
     //reinitialisation des boucliers
@@ -289,13 +299,13 @@ function simulateur() {
             VaisseauCible = [];
             if (typeFlotte == "att") // la cible est un vaisseau de la flotte def
             {
-                var idVaisseauCible = Math.floor(Math.random() * (FDTab.length - 1)); // selection aléatoire
+                var idVaisseauCible = Math.floor(Math.random() * (FDTab.length)); // selection aléatoire
                 VaisseauCible = FDTab[idVaisseauCible];
 
             }
             else //la cible est un vaisseau de la flotte attaquant
             {
-                var idVaisseauCible = Math.floor(Math.random() * (FATab.length - 1)); // selection aléatoire
+                var idVaisseauCible = Math.floor(Math.random() * (FATab.length )); // selection aléatoire
                 VaisseauCible = FATab[idVaisseauCible];
 
             }
@@ -321,10 +331,12 @@ function simulateur() {
                     VaisseauCible[3] -= degatAvenir;
                 }
                 else {
-                    //console.log(" L'unité en défense a été détruite (reste 0 points de structure)." );
                     VaisseauCible[3] = -1;
                 }
             }
+
+
+
             if (VaisseauCible[3] * 10 < VaisseauCible[4] * 7) {        /// Calcul de la probabilité de destruction si cible atteinte a %
                 if (Math.floor(Math.random() * VaisseauCible[4]) > VaisseauCible[3]) {
                     VaisseauCible[3] = -1;
@@ -395,6 +407,7 @@ function simulateur() {
             //suppression vaisseau detruit
             pullOutDestroy();
 
+
             //on sort si plus de flotte
             if (FATab.length == 0) // defenseur gagnant
             {
@@ -420,6 +433,7 @@ function simulateur() {
 
 
     };
+
 
 
 };
