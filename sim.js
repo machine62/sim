@@ -121,11 +121,7 @@ function simulateur() {
     //-------------------------------------------------
     //ajout flotte attaque
     this.addFA = function (tabUnit) {
-
-        console.log("normalement " + this.getEmptyFA().length);
-        console.log("recu " + tabUnit.length);
-
-        if (this.getEmptyFA().length != tabUnit.length) {
+       if (this.getEmptyFA().length != tabUnit.length) {
             throw "Flotte manquante";
         }
 
@@ -371,15 +367,9 @@ function simulateur() {
 
         ///creation de la flotte
 
-        console.log("avant combat");
-        console.log(FA);
-        console.log(FD);
 
-        console.log("avant simulation");
         generateFATAb();
         generateFDTAb();
-        console.log(FATab);
-        console.log(FDTab);
 
 
         var NombreDeTours;
