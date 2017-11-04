@@ -122,28 +122,28 @@ function simulateur() {
     //ajout flotte attaque
     this.addFA = function (tabUnit) {
 
-        console.log("normalement "+ this.getEmptyFA().length);
-        console.log("recu "  + tabUnit.length);
+        console.log("normalement " + this.getEmptyFA().length);
+        console.log("recu " + tabUnit.length);
 
         if (this.getEmptyFA().length != tabUnit.length) {
             throw "Flotte manquante";
         }
 
-        FA = tabUnit ;
+        FA = tabUnit;
     };
     //ajout flotte defense
     this.addFD = function (tabUnit) {
         if (this.getEmptyFD().length != tabUnit.length) {
             throw "Flotte manquante";
         }
-        FD = tabUnit ;
+        FD = tabUnit;
     };
 
     //recupere une liste vide de flotte d'ataque'
     this.getEmptyFA = function () {
         //var keys = Object.keys(unit)
         let retour = [];
-        var unit= this.getUnit();
+        var unit = this.getUnit();
         for (var i = unit.PT; i < unit.EDLM + 1; i++) {
             retour[i] = 0;
         }
@@ -153,7 +153,7 @@ function simulateur() {
     //recupere une liste vide de defense
     this.getEmptyFD = function () {
         let retour = [];
-        var unit= this.getUnit();
+        var unit = this.getUnit();
         for (var i = unit.PT; i < unit.MIP + 1; i++) {
             retour[i] = 0;
         }
@@ -184,9 +184,9 @@ function simulateur() {
         var keys = Object.keys(unit);
         return keys[id];
     }
-    //-------------------------------------------------
-    //-------------------------------------------------
 
+    //-------------------------------------------------
+    //-------------------------------------------------
 
 
     //-------------------------------------------------
@@ -196,55 +196,56 @@ function simulateur() {
     function generateFATAb() {
         var FlotteID = 0; //identifiant flotte
         // on va parcourir la flotte réél
-            for (var i = unit.PT; i < unit.EDLM; i++) {
-                if (FA[i] != 0) {
-                    var count = 0;
-                    for (count = 0; count < FA[i]; count++) {
-                        FATab.push([ i, unitsFeature[i][unitFeature.Degat], unitsFeature[i][unitFeature.Bouclier], unitsFeature[i][unitFeature.Coque] / 10 , unitsFeature[i][unitFeature.Coque] / 10, unitsFeature[i][unitFeature.Bouclier]]); // todo virer les enums
-                        //            0       1                                         2                                     3                                 4 (valeur initiale)                              5 (valeur initiale)
-                    }
-           }
+        for (var i = unit.PT; i < unit.EDLM; i++) {
+            if (FA[i] != 0) {
+                var count = 0;
+                for (count = 0; count < FA[i]; count++) {
+                    FATab.push([i, unitsFeature[i][unitFeature.Degat], unitsFeature[i][unitFeature.Bouclier], unitsFeature[i][unitFeature.Coque] / 10, unitsFeature[i][unitFeature.Coque] / 10, unitsFeature[i][unitFeature.Bouclier]]); // todo virer les enums
+                    //            0       1                                         2                                     3                                 4 (valeur initiale)                              5 (valeur initiale)
+                }
+            }
         }
     }
+
     ///generer la flotte réél defense
     function generateFDTAb() {
         var FlotteID = 0; //identifiant flotte
         // on va parcourir la flotte réél
-            for (var i = unit.PT; i < (unit.MIP + 1); i++) {
-                if (FD[i] != 0) {
-                    var count = 0;
-                    for (count = 0; count < FD[i]; count++) {
-                        FDTab.push([ i, unitsFeature[i][unitFeature.Degat], unitsFeature[i][unitFeature.Bouclier], unitsFeature[i][unitFeature.Coque]/10, unitsFeature[i][unitFeature.Coque]/10, unitsFeature[i][unitFeature.Bouclier]]); // // todo virer les enums
-                        //            0        1                                              2                                3                                  4                                  5
-                    }
+        for (var i = unit.PT; i < (unit.MIP + 1); i++) {
+            if (FD[i] != 0) {
+                var count = 0;
+                for (count = 0; count < FD[i]; count++) {
+                    FDTab.push([i, unitsFeature[i][unitFeature.Degat], unitsFeature[i][unitFeature.Bouclier], unitsFeature[i][unitFeature.Coque] / 10, unitsFeature[i][unitFeature.Coque] / 10, unitsFeature[i][unitFeature.Bouclier]]); // // todo virer les enums
+                    //            0        1                                              2                                3                                  4                                  5
                 }
+            }
         }
     }
+
     //-------------------------------------------------
     //-------------------------------------------------
 
     //-------------------------------------------------
     //--------comptage de flotte ---------------------
     //-------------------------------------------------
-    function generateFAResult()
-    {
+    function generateFAResult() {
         ResultFA = sim.getEmptyFA();
 
         for (var i = 0; i < FATab.length; ++i) {
-            ResultFA[FATab[i][0]] ++;
+            ResultFA[FATab[i][0]]++;
         }
     }
-    function generateFDResult()
-    {
+
+    function generateFDResult() {
         ResultFD = sim.getEmptyFD();
 
         for (var i = 0; i < FDTab.length; ++i) {
-            ResultFD[FDTab[i][0]] ++;
+            ResultFD[FDTab[i][0]]++;
         }
     }
-    //-------------------------------------------------
-    //-------------------------------------------------
 
+    //-------------------------------------------------
+    //-------------------------------------------------
 
 
     //-------------------------------------------------
@@ -257,7 +258,7 @@ function simulateur() {
             if (FATab[i][3] <= 0) {
                 // sniff
                 FATab.splice(i, 1);
-          }
+            }
         }
         //flotte defense
         for (var i = 0; i < FDTab.length; i++) {
@@ -269,95 +270,101 @@ function simulateur() {
     }
 
     //reinitialisation des boucliers
-    function  ReinitBouclier()
-    {
+    function ReinitBouclier() {
         // flotte attaquante
         for (var i = 0; i < FATab.length; i++) {
-            FATab[i][2] =   FATab[i][5];
+            FATab[i][2] = FATab[i][5];
         }
         //flotte defense
         for (var i = 0; i < FDTab.length; i++) {
-            FDTab[i][2] =  FDTab[i][5];
+            FDTab[i][2] = FDTab[i][5];
         }
     }
 
-    function fighting(_typeFlotte , _IDtype ,_degatAvenir )
-    {
-        typeFlotte =_typeFlotte ;
+    function fighting(_typeFlotte, _IDtype, _degatAvenir) {
+        typeFlotte = _typeFlotte;
         IDtype = _IDtype;
-        degatAvenir= _degatAvenir;
+        degatAvenir = _degatAvenir;
+        isRapidfire = true;
 
+        do { //permet rapidfire
 
-        //////// delection de la cible \\\\\\\\\\\\\\
-        VaisseauCible = [];
-        if (typeFlotte == "att") // la cible est un vaisseau de la flotte def
-        {
-            var idVaisseauCible = Math.floor(Math.random() * (FDTab.length -1)); // selection aléatoire
-            VaisseauCible = FDTab[idVaisseauCible];
+            //////// delection de la cible \\\\\\\\\\\\\\
+            VaisseauCible = [];
+            if (typeFlotte == "att") // la cible est un vaisseau de la flotte def
+            {
+                var idVaisseauCible = Math.floor(Math.random() * (FDTab.length - 1)); // selection aléatoire
+                VaisseauCible = FDTab[idVaisseauCible];
 
-        }
-        else //la cible est un vaisseau de la flotte attaquant
-        {
-            var idVaisseauCible = Math.floor(Math.random() * (FATab.length - 1)); // selection aléatoire
-            VaisseauCible = FATab[idVaisseauCible];
+            }
+            else //la cible est un vaisseau de la flotte attaquant
+            {
+                var idVaisseauCible = Math.floor(Math.random() * (FATab.length - 1)); // selection aléatoire
+                VaisseauCible = FATab[idVaisseauCible];
 
-        }
-        //////// ------------------------ \\\\\\\\\\\\\\
+            }
+            //////// ------------------------ \\\\\\\\\\\\\\
 
-        //////// routine d attaque \\\\\\\\\\\\\\
-        if (degatAvenir < VaisseauCible[2] / 100) { /// si l'adversaire pas assz puissant
-            degatAvenir = 0;
-        }
-        else
-        {
-            if (degatAvenir < VaisseauCible[2]) { // le bouclier absorbe tout il y a un restant bouclier
-                VaisseauCible[3] -= degatAvenir;
+            //////// routine d attaque \\\\\\\\\\\\\\
+            if (degatAvenir < VaisseauCible[2] / 100) { /// si l'adversaire pas assz puissant
                 degatAvenir = 0;
             }
-            else { // le bouclier ne peut tout absorber
-                degatAvenir -= VaisseauCible[2];
-                VaisseauCible[2] = 0; // bouclier a 0 maintenant
-            }
+            else {
+                if (degatAvenir < VaisseauCible[2]) { // le bouclier absorbe tout il y a un restant bouclier
+                    VaisseauCible[3] -= degatAvenir;
+                    degatAvenir = 0;
+                }
+                else { // le bouclier ne peut tout absorber
+                    degatAvenir -= VaisseauCible[2];
+                    VaisseauCible[2] = 0; // bouclier a 0 maintenant
+                }
 
-        }
-       if (degatAvenir > 0) {   //  dégats dans la coque possible uniquement si les tirs ont mis le bouclier a 0
-            if (degatAvenir < VaisseauCible[3]) {
-                VaisseauCible[3] -= degatAvenir;
+            }
+            if (degatAvenir > 0) {   //  dégats dans la coque possible uniquement si les tirs ont mis le bouclier a 0
+                if (degatAvenir < VaisseauCible[3]) {
+                    VaisseauCible[3] -= degatAvenir;
+                }
+                else {
+                    //console.log(" L'unité en défense a été détruite (reste 0 points de structure)." );
+                    VaisseauCible[3] = -1;
+                }
+            }
+            if (VaisseauCible[3] * 10 < VaisseauCible[4] * 7) {        /// Calcul de la probabilité de destruction si cible atteinte a %
+                if (Math.floor(Math.random() * VaisseauCible[4]) > VaisseauCible[3]) {
+                    VaisseauCible[3] = -1;
+                }
+            }
+            //////// ------------------------ \\\\\\\\\\\\\\
+
+            //////// Rapid fire  \\\\\\\\\\\\\\
+            var RF = RapidFire[IDtype][VaisseauCible[0]]; // rf id_vaisseau vs id_cible
+            var rnd = Math.random() * 100;
+            if (rnd > RF) {
+                isRapidfire = false;
+
+            }
+            //////// ------------------------ \\\\\\\\\\\\\\
+
+
+            //fin du cycle d'attaque, on rend la flottille
+            if (typeFlotte == "att") {
+                FDTab[idVaisseauCible] = VaisseauCible;
             }
             else {
-                //console.log(" L'unité en défense a été détruite (reste 0 points de structure)." );
-                VaisseauCible[3] = -1;
+                FATab[idVaisseauCible] = VaisseauCible;
             }
+            //////// ------------------------ \\\\\\\\\\\\\\
+
+
         }
-        if (VaisseauCible[3] * 10 < VaisseauCible[4] * 7) {        /// Calcul de la probabilité de destruction si cible atteinte a %
-            if (Math.floor(Math.random() * VaisseauCible[4]) > VaisseauCible[3]) {
-                VaisseauCible[3] = -1;
-            }
-        }
+        while (isRapidfire);//permet RF tant que RF est vrai
+
         //////// ------------------------ \\\\\\\\\\\\\\
-
-        //todo rapid fire
-
-        //fin du cycle d'attaque, on rend la flottille
-        if (typeFlotte == "att")
-        {
-            FDTab[idVaisseauCible] =   VaisseauCible;
-        }
-        else
-        {
-              FATab[idVaisseauCible]= VaisseauCible ;
-        }
-
-
-
-
 
     }
 
     //-------------------------------------------------
     //-------------------------------------------------
-
-
 
 
     this.simulate = function () {
@@ -376,25 +383,23 @@ function simulateur() {
 
 
         var NombreDeTours;
-        for (NombreDeTours = 1; NombreDeTours <7; ++NombreDeTours)
-        {
+        for (NombreDeTours = 1; NombreDeTours < 7; ++NombreDeTours) {
 
             // si ce n 'est pas le premier tour il faut reinitialiser le bouclier
-            if (NombreDeTours != 1)
-            {
+            if (NombreDeTours != 1) {
                 ReinitBouclier();
             }
 
             /// attaque attaque
             var size = FATab.length;
-               for (var i = 0; i < size; ++i) {
-                fighting("att",FATab[i][0],FATab[i][1]);
+            for (var i = 0; i < size; ++i) {
+                fighting("att", FATab[i][0], FATab[i][1]);
             }
 
             /// defense attaque
             size = FDTab.length;
             for (var i = 0; i < size; ++i) {
-                fighting("def",FDTab[i][0],FDTab[i][1]);
+                fighting("def", FDTab[i][0], FDTab[i][1]);
             }
 
             //suppression vaisseau detruit
@@ -413,17 +418,15 @@ function simulateur() {
             }
 
 
-
         }
 
 
-
-            // on compte les rescapés
+        // on compte les rescapés
         generateFAResult();
         generateFDResult();
-       // console.log("apres combat");
+        // console.log("apres combat");
         //console.log(ResultFA);
-       // console.log(ResultFD);
+        // console.log(ResultFD);
 
 
     };
