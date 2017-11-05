@@ -192,12 +192,21 @@ function simulateur() {
     function generateFATAb() {
         var FlotteID = 0; //identifiant flotte
         // on va parcourir la flotte réél
-        for (var i = unit.PT; i < unit.EDLM; i++) {
+        for (var i = unit.PT; i < unit.EDLM + 1 ; i++) {
             if (FA[i] != 0) {
                 var count = 0;
                 for (count = 0; count < FA[i]; count++) {
-                    FATab.push([i, unitsFeature[i][unitFeature.Degat], unitsFeature[i][unitFeature.Bouclier], unitsFeature[i][unitFeature.Coque] / 10, unitsFeature[i][unitFeature.Coque] / 10, unitsFeature[i][unitFeature.Bouclier]]); // todo virer les enums
-                    //            0       1                                         2                                     3                                 4 (valeur initiale)                              5 (valeur initiale)
+                    // todo plus tard prendre en compte les technologies
+                    var techprotec = 0;
+                    var techarmes = 0;
+                    var techbouclier = 0;
+
+                    var bouclier = unitsFeature[i][unitFeature.Bouclier] *  ( 100 + 10 * techbouclier )/100;
+                    var coque = unitsFeature[i][unitFeature.Coque]*  ( 100 + 10 * techprotec )/1000;
+                    var degat = unitsFeature[i][unitFeature.Degat]*  ( 100 + 10 * techarmes )/100;
+
+                    FATab.push([i, degat, bouclier, coque , coque , bouclier]);
+                    //          0    1       2       3     4 (initiale) 5 (initiale)
                 }
             }
         }
@@ -211,9 +220,18 @@ function simulateur() {
             if (FD[i] != 0) {
                 var count = 0;
                 for (count = 0; count < FD[i]; count++) {
-                    FDTab.push([i, unitsFeature[i][unitFeature.Degat], unitsFeature[i][unitFeature.Bouclier], unitsFeature[i][unitFeature.Coque] / 10, unitsFeature[i][unitFeature.Coque] / 10, unitsFeature[i][unitFeature.Bouclier]]); // // todo virer les enums
-                    //            0        1                                              2                                3                                  4                                  5
-                }
+                    // todo plus tard prendre en compte les technologies
+                    var techprotec = 0;
+                    var techarmes = 0;
+                    var techbouclier = 0;
+
+                    var bouclier = unitsFeature[i][unitFeature.Bouclier] *  ( 100 + 10 * techbouclier )/100;
+                    var coque = unitsFeature[i][unitFeature.Coque]*  ( 100 + 10 * techprotec )/1000;
+                    var degat = unitsFeature[i][unitFeature.Degat]*  ( 100 + 10 * techarmes )/100;
+
+                    FDTab.push([i, degat, bouclier, coque , coque , bouclier]);
+                    //          0    1       2       3     4 (initiale) 5 (initiale)
+ }
             }
         }
     }
@@ -261,6 +279,7 @@ function simulateur() {
         }
         FATab = null;
         FATab = NewFATab;
+//        console.log( NewFATab.toString());
 
 
         //flotte defense
@@ -280,10 +299,14 @@ function simulateur() {
         // flotte attaquante
         for (var i = 0; i < FATab.length; i++) {
             FATab[i][2] = FATab[i][5];
-        }
+          }
         //flotte defense
         for (var i = 0; i < FDTab.length; i++) {
+
             FDTab[i][2] = FDTab[i][5];
+
+
+
         }
     }
 
@@ -317,10 +340,12 @@ function simulateur() {
             }
             else {
                 if (degatAvenir < VaisseauCible[2]) { // le bouclier absorbe tout il y a un restant bouclier
-                    VaisseauCible[3] -= degatAvenir;
+                    VaisseauCible[2] -= degatAvenir;
                     degatAvenir = 0;
-                }
+                    }
                 else { // le bouclier ne peut tout absorber
+                    //    console.log(" bouclier PAS assez puissant   " + degatAvenir + "<" + VaisseauCible[2]);
+
                     degatAvenir -= VaisseauCible[2];
                     VaisseauCible[2] = 0; // bouclier a 0 maintenant
                 }
@@ -387,6 +412,18 @@ function simulateur() {
         var NombreDeTours;
         for (NombreDeTours = 1; NombreDeTours < 7; ++NombreDeTours) {
 
+            //on sort si plus de flotte
+            if (FATab.length == 0) // defenseur gagnant
+            {
+                 break;
+            }
+            if (FDTab.length == 0) // Attaquant gagnant
+            {
+                 break;
+            }
+
+
+
             // si ce n 'est pas le premier tour il faut reinitialiser le bouclier
             if (NombreDeTours != 1) {
                 ReinitBouclier();
@@ -411,14 +448,15 @@ function simulateur() {
             //on sort si plus de flotte
             if (FATab.length == 0) // defenseur gagnant
             {
-                console.log(" defenseur gagnant tour " + NombreDeTours);
+                //console.log(" defenseur gagnant tour " + NombreDeTours);
                 break;
             }
             if (FDTab.length == 0) // Attaquant gagnant
             {
-                console.log(" attaquant gagnant tour " + NombreDeTours);
+                //console.log(" attaquant gagnant tour " + NombreDeTours);
                 break;
             }
+
 
 
         }
@@ -427,11 +465,6 @@ function simulateur() {
         // on compte les rescapés
         generateFAResult();
         generateFDResult();
-        // console.log("apres combat");
-        //console.log(ResultFA);
-        // console.log(ResultFD);
-
-
     };
 
 
