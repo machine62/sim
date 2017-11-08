@@ -1,4 +1,8 @@
 function simulateur() {
+    const version ="1.0"
+    this.getVersion = function () {
+        return version;
+    }
 
     //-------------------------------------------------
     //--------Declaration -----------------------------
