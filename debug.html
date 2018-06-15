@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Test debug Simulation</title>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="sim.js"></script>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row  col-lg-12 ">
+
+    </div>
+</div>
+
+
+
+<script>
+
+        var tabtest = [];
+
+        var sim = new simulateur();
+        var units = sim.getUnit();
+
+
+        // flotte en lice
+        tabtest["FA"] =             [0, 0, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+        tabtest["FD"] =             [0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        console.log("flotte  attaquant")
+        console.log(tabtest["FA"])
+
+        console.log("flotte def")
+        console.log(tabtest["FD"])
+
+        var start = new Date();
+
+
+
+
+        sim.addFA(tabtest["FA"]);
+        sim.addFD(tabtest["FD"]);
+        sim.simulate(); // simulation rpoprement dite
+
+        var ResultFA = sim.ResultFA();
+        var ResultFD = sim.ResultFD();
+
+
+        var end  = new Date();
+        var time = end.getTime() - start.getTime();
+        console.log("resultat attaquant")
+        console.log(ResultFA)
+        console.log("resultat defenseur")
+        console.log(ResultFD)
+        console.log("Temps")
+        console.log(time)
+
+</script>
+
+
+</body>

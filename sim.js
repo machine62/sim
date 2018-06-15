@@ -452,12 +452,12 @@ function simulateur() {
             //on sort si plus de flotte
             if (FATab.length == 0) // defenseur gagnant
             {
-                //console.log(" defenseur gagnant tour " + NombreDeTours);
+                console.log(" defenseur gagnant tour " + NombreDeTours);
                 break;
             }
             if (FDTab.length == 0) // Attaquant gagnant
             {
-                //console.log(" attaquant gagnant tour " + NombreDeTours);
+                console.log(" attaquant gagnant tour " + NombreDeTours);
                 break;
             }
 
