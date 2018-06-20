@@ -1,5 +1,5 @@
 function simulateur() {
-    const version ="1.0"
+    const version = "1.0"
     this.getVersion = function () {
         return version;
     }
@@ -58,6 +58,33 @@ function simulateur() {
         return unitFeature;
     };
 
+    const unitsPrice =
+        [
+            /*               PT */[2000, 2000, 0],
+            /*               GT */[6000, 6000, 0],
+            /*               Cl */[3000, 1000, 0],
+            /*               CL */[6000, 4000, 0],
+            /*               CR */[20000, 7000, 2000],
+            /*               VB */[45000, 15000, 0],
+            /*               VC */[10000, 20000, 10000],
+            /*               RC */[10000, 6000, 20000],
+            /*               SE */[0, 1000, 0],
+            /*               SS */[0, 2000, 500],
+            /*               BB */[50000, 25000, 15000],
+            /*               DS */[60000, 50000, 15000],
+            /*               BC */[30000, 40000, 15000],
+            /*               EM */[5000000, 4000000, 1000000],
+            /*               LM */[2000, 0, 0],
+            /*               Ll */[1500, 500, 0],
+            /*               LL */[6000, 2000, 0],
+            /*               AI */[2000, 6000, 0],
+            /*               CG */[20000, 15000, 2000],
+            /*               LP */[50000, 50000, 50000],
+            /*               PB */[10000, 10000, 0],
+            /*               GB */[50000, 50000, 0]
+
+        ];
+
     const unitsFeature =
         [
             /*               PT */[5, 10, 4000, 5000],
@@ -92,7 +119,7 @@ function simulateur() {
         /*               GT */[-1, -1, -1, -1, -1, -1, -1, -1, 80, 80, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
         /*               Cl */[-1, -1, -1, -1, -1, -1, -1, -1, 80, 80, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
         /*               CL */[-1, -1, -1, -1, -1, -1, -1, -1, 80, 80, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-        /*               CR */[-1, -1, 83.333, -1, -1, -1, -1, -1, 80, 80, -1, -1, -1, -1, 90, -1, -1, -1, -1, -1, -1, -1],
+        /*               CR */[-1, -1, 83.33, -1, -1, -1, -1, -1, 80, 80, -1, -1, -1, -1, 90, -1, -1, -1, -1, -1, -1, -1],
         /*               VB */[-1, -1, -1, -1, -1, -1, -1, -1, 80, 80, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
         /*               VC */[-1, -1, -1, -1, -1, -1, -1, -1, 80, 80, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
         /*               RC */[-1, -1, -1, -1, -1, -1, -1, -1, 80, 80, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
@@ -125,7 +152,7 @@ function simulateur() {
     //-------------------------------------------------
     //ajout flotte attaque
     this.addFA = function (tabUnit) {
-       if (this.getEmptyFA().length != tabUnit.length) {
+        if (this.getEmptyFA().length != tabUnit.length) {
             throw "Flotte manquante";
         }
 
@@ -185,6 +212,24 @@ function simulateur() {
         return keys[id];
     }
 
+    function getFlottePrice(flotte){
+        var retour = [];
+
+        var metal = 0;
+        var cristal = 0;
+        var deut = 0;
+
+        for (var i = unit.PT; i < (unit.GB + 1); i++) {
+            metal += unitsPrice[i][0];
+            cristal += unitsPrice[i][1];
+            deut += unitsPrice[i][2];
+        }
+
+        retour = [metal,cristal,deut];
+        return
+    }
+    //todo cdr potentiel d'une flotte
+
     //-------------------------------------------------
     //-------------------------------------------------
 
@@ -196,7 +241,7 @@ function simulateur() {
     function generateFATAb() {
         var FlotteID = 0; //identifiant flotte
         // on va parcourir la flotte réél
-        for (var i = unit.PT; i < unit.EDLM + 1 ; i++) {
+        for (var i = unit.PT; i < unit.EDLM + 1; i++) {
             if (FA[i] != 0) {
                 var count = 0;
                 for (count = 0; count < FA[i]; count++) {
@@ -205,11 +250,11 @@ function simulateur() {
                     var techarmes = 0;
                     var techbouclier = 0;
 
-                    var bouclier = unitsFeature[i][unitFeature.Bouclier] *  ( 100 + 10 * techbouclier )/100;
-                    var coque = unitsFeature[i][unitFeature.Coque]*  ( 100 + 10 * techprotec )/1000;
-                    var degat = unitsFeature[i][unitFeature.Degat]*  ( 100 + 10 * techarmes )/100;
+                    var bouclier = unitsFeature[i][unitFeature.Bouclier] * ( 100 + 10 * techbouclier ) / 100;
+                    var coque = unitsFeature[i][unitFeature.Coque] * ( 100 + 10 * techprotec ) / 1000;
+                    var degat = unitsFeature[i][unitFeature.Degat] * ( 100 + 10 * techarmes ) / 100;
 
-                    FATab.push([i, degat, bouclier, coque , coque , bouclier]);
+                    FATab.push([i, degat, bouclier, coque, coque, bouclier]);
                     //          0    1       2       3     4 (initiale) 5 (initiale)
                 }
             }
@@ -229,13 +274,13 @@ function simulateur() {
                     var techarmes = 0;
                     var techbouclier = 0;
 
-                    var bouclier = unitsFeature[i][unitFeature.Bouclier] *  ( 100 + 10 * techbouclier )/100;
-                    var coque = unitsFeature[i][unitFeature.Coque]*  ( 100 + 10 * techprotec )/1000;
-                    var degat = unitsFeature[i][unitFeature.Degat]*  ( 100 + 10 * techarmes )/100;
+                    var bouclier = unitsFeature[i][unitFeature.Bouclier] * ( 100 + 10 * techbouclier ) / 100;
+                    var coque = unitsFeature[i][unitFeature.Coque] * ( 100 + 10 * techprotec ) / 1000;
+                    var degat = unitsFeature[i][unitFeature.Degat] * ( 100 + 10 * techarmes ) / 100;
 
-                    FDTab.push([i, degat, bouclier, coque , coque , bouclier]);
+                    FDTab.push([i, degat, bouclier, coque, coque, bouclier]);
                     //          0    1       2       3     4 (initiale) 5 (initiale)
- }
+                }
             }
         }
     }
@@ -303,12 +348,11 @@ function simulateur() {
         // flotte attaquante
         for (var i = 0; i < FATab.length; i++) {
             FATab[i][2] = FATab[i][5];
-          }
+        }
         //flotte defense
         for (var i = 0; i < FDTab.length; i++) {
 
             FDTab[i][2] = FDTab[i][5];
-
 
 
         }
@@ -346,7 +390,7 @@ function simulateur() {
                 if (degatAvenir < VaisseauCible[2]) { // le bouclier absorbe tout il y a un restant bouclier
                     VaisseauCible[2] -= degatAvenir;
                     degatAvenir = 0;
-                    }
+                }
                 else { // le bouclier ne peut tout absorber
                     //    console.log(" bouclier PAS assez puissant   " + degatAvenir + "<" + VaisseauCible[2]);
 
@@ -363,7 +407,6 @@ function simulateur() {
                     VaisseauCible[3] = -1;
                 }
             }
-
 
 
             if (VaisseauCible[3] * 10 < VaisseauCible[4] * 7) {        /// Calcul de la probabilité de destruction si cible atteinte a %
@@ -419,13 +462,12 @@ function simulateur() {
             //on sort si plus de flotte
             if (FATab.length == 0) // defenseur gagnant
             {
-                 break;
+                break;
             }
             if (FDTab.length == 0) // Attaquant gagnant
             {
-                 break;
+                break;
             }
-
 
 
             // si ce n 'est pas le premier tour il faut reinitialiser le bouclier
@@ -462,7 +504,6 @@ function simulateur() {
             }
 
 
-
         }
 
 
@@ -470,7 +511,6 @@ function simulateur() {
         generateFAResult();
         generateFDResult();
     };
-
 
 
 };

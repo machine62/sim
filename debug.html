@@ -23,8 +23,18 @@
 
 
 <script>
+    var total=0;
+    var total_test = 100000000;
+    for (i = 0; i < total_test; i++) {
+        total = total + (Math.random()* 100 ) ;
 
-        var tabtest = [];
+    }
+    console.log("moyenne " + total/total_test);
+    console.log("moyenne " + total/total_test);
+    console.log("moyenne " + total/total_test);
+
+
+    var tabtest = [];
 
         var sim = new simulateur();
         var units = sim.getUnit();
