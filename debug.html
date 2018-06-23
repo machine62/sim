@@ -41,13 +41,17 @@
 
 
         // flotte en lice
-        tabtest["FA"] =             [0, 0, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
-        tabtest["FD"] =             [0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        console.log("flotte  attaquant")
-        console.log(tabtest["FA"])
+        tabtest["FA"] =             [0, 0, 70, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0 , 0];
+        tabtest["FD"] =             [0, 0, 30, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        console.log("flotte  attaquant");
+        console.log(tabtest["FA"]);
+        console.log("flotte  attaquant valeur ");
 
-        console.log("flotte def")
-        console.log(tabtest["FD"])
+        console.log(sim.getFlottePrice(tabtest["FA"]));
+        console.log("flotte def");
+        console.log(tabtest["FD"]);
+        console.log("flotte  defense valeur ");
+        console.log(sim.getFlottePrice(tabtest["FD"]));
 
         var start = new Date();
 
@@ -64,13 +68,16 @@
 
         var end  = new Date();
         var time = end.getTime() - start.getTime();
-        console.log("resultat attaquant")
-        console.log(ResultFA)
-        console.log("resultat defenseur")
-        console.log(ResultFD)
-        console.log("Temps")
-        console.log(time)
-
+        console.log("resultat attaquant");
+        console.log(ResultFA);
+        console.log("flotte  attaque valeur resultat ");
+        console.log(sim.getFlottePrice(ResultFA));
+        console.log("resultat defenseur");
+        console.log(ResultFD);
+        console.log("flotte  defense valeur resultat ");
+        console.log(sim.getFlottePrice(ResultFD));
+        console.log("Temps");
+        console.log(time);
 </script>
 
 

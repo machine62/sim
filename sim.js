@@ -212,7 +212,7 @@ function simulateur() {
         return keys[id];
     }
 
-    function getFlottePrice(flotte){
+    function _getFlottePrice(flotte) {
         var retour = [];
 
         var metal = 0;
@@ -220,14 +220,17 @@ function simulateur() {
         var deut = 0;
 
         for (var i = unit.PT; i < (unit.GB + 1); i++) {
-            metal += unitsPrice[i][0];
-            cristal += unitsPrice[i][1];
-            deut += unitsPrice[i][2];
+            if (flotte[i]) {
+                metal += (unitsPrice[i][0] * flotte[i]);
+                cristal += ( unitsPrice[i][1] * flotte[i]);
+                deut += (unitsPrice[i][2] * flotte[i]);
+            }
         }
 
-        retour = [metal,cristal,deut];
-        return
+        retour = [metal, cristal, deut];
+        return retour;
     }
+
     //todo cdr potentiel d'une flotte
 
     //-------------------------------------------------
@@ -445,6 +448,12 @@ function simulateur() {
 
     //-------------------------------------------------
     //-------------------------------------------------
+
+
+    this.getFlottePrice = function (flotte) {
+
+        return _getFlottePrice(flotte);
+    }
 
 
     this.simulate = function () {
